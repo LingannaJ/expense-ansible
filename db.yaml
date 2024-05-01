@@ -12,8 +12,8 @@
       name: mysqld
       state: Started 
       enabled: yes
-# check password is already setup or not
-- name: check DB connection
+  # check password is already setup or not
+  - name: check DB connection
     community.mysql.mysql_info:
       login_user: root
       login_password: ExpenseApp@1
