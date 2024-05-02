@@ -2,7 +2,8 @@
   become: yes
   hosts: backend
   vars:
-  
+    login_host: 172.31.26.231
+    login_password: ExpenseApp@1
   tasks:
   - name: disable default nodejs
     ansible.builtin.command: dnf module disable nodejs -y
@@ -53,3 +54,12 @@
       - PyMySQL # to connect MySQL DB from Ansible
       - cryptography
       executable: pip3.9 # pip3.11 if python version is 3.11
+
+  - name: import data into mysql
+    community.mysql.mysql_db:
+      login_user: root
+      login_password: "{{ login_password }}"
+      login_host: "{{ login_host }}"
+      target: /app/schema/backend.sql
+      state: import
+      name: all
