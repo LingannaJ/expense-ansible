@@ -2,7 +2,7 @@
   become: yes
   hosts: backend
   vars:
-    login_host: 172.31.26.231
+    login_host: 172.31.19.107
     login_password: ExpenseApp@1
   tasks:
   - name: disable default nodejs
@@ -63,3 +63,13 @@
       target: /app/schema/backend.sql
       state: import
       name: all
+
+  - name: daemon reload
+    ansible.builtin.systemd_service:
+      daemon_reload: true
+
+  - name: start and enable backend service
+    ansible.builtin.service:
+      name: backend
+      state: started
+      enabled: yes
